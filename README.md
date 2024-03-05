@@ -6,6 +6,7 @@
 - Release
 - 프로젝트 동작 시키기
 
+---
 # Introducing
 **Cloud Learning Management Service (CLMS)**
 학습자와 교수자의 원활한 SW 개발 환경 구축을 위한 클라우드 컴퓨팅 서비스
