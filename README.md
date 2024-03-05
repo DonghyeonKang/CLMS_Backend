@@ -1,9 +1,10 @@
-# Introducing
-# System Structure
-# ER-Diagram
-# File Structure
-# Release
-# 프로젝트 동작 시키기
+목차
+- Introducing
+- System Structure
+- ER-Diagram
+- File Structure
+- Release
+- 프로젝트 동작 시키기
 
 # Introducing
 **Cloud Learning Management Service (CLMS)**
