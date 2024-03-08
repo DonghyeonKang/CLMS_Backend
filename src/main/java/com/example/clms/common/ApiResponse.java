@@ -23,8 +23,16 @@ public class ApiResponse<T> {
         return new ApiResponse<>(SUCCESS_STATUS, data, null);
     }
 
-    public static ApiResponse<?> duplicateEmailException() {
-        return new ApiResponse<>(ERROR_STATUS, null, "이미 가입된 메일입니다.");
+    public static ApiResponse<?> userNotFoundException(String message) {
+        return new ApiResponse<>(ERROR_STATUS, null, message);
+    }
+
+    public static ApiResponse<?> duplicateEmailException(String message) {
+        return new ApiResponse<>(ERROR_STATUS, null, message);
+    }
+
+    public static ApiResponse<?> authNumNotEqualException(String message) {
+        return new ApiResponse<>(ERROR_STATUS, null, message);
     }
 
     private ApiResponse(String status, T data, String message) {

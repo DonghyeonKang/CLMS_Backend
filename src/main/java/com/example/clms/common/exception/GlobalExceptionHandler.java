@@ -10,7 +10,16 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
     @ExceptionHandler(DuplicateEmailException.class)
     public ResponseEntity<ApiResponse<?>> handleDuplicateEmailException(DuplicateEmailException ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiResponse.duplicateEmailException());
+        return ResponseEntity.status(ex.getStatus()).body(ApiResponse.duplicateEmailException(ex.getMessage()));
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ApiResponse<?>> handleUserNotFoundException(UserNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(ApiResponse.userNotFoundException(ex.getMessage()));
+    }
+
+    @ExceptionHandler(AuthNumNotEqualException.class)
+    public ResponseEntity<ApiResponse<?>> handleAuthNumNotEqualException(AuthNumNotEqualException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(ApiResponse.authNumNotEqualException(ex.getMessage()));
+    }
 }

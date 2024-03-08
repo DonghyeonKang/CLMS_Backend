@@ -1,14 +1,12 @@
 package com.example.clms.common.exception;
 
-public class DuplicateEmailException extends RuntimeException {
-
+public class UserNotFoundException extends RuntimeException {
     private final ErrorCode errorCode;
 
-    public DuplicateEmailException(ErrorCode errorCode) {
+    public UserNotFoundException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
-
     public int getStatus() {
         return errorCode.getStatus();
     }
