@@ -1,8 +1,8 @@
 package com.example.clms.service.user;
 
 
+import com.example.clms.common.exception.DuplicateEmailException;
 import com.example.clms.common.exception.ErrorCode;
-import com.example.clms.common.exception.RegisterException;
 import com.example.clms.dto.user.UserRegisterDto;
 import com.example.clms.entity.department.Department;
 import com.example.clms.entity.university.University;
@@ -51,7 +51,7 @@ public class RegisterServiceImpl implements RegisterService {
 
     private void validateDuplicateEmail(String email) {
         if (userRepository.findByUsername(email).isPresent()) {
-            throw new RegisterException(ErrorCode.DUPLICATED_EMAIL);
+            throw new DuplicateEmailException(ErrorCode.DUPLICATED_EMAIL);
         }
     }
 }
