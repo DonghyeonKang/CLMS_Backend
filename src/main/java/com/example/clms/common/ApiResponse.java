@@ -19,6 +19,9 @@ public class ApiResponse<T> {
     public static ApiResponse<?> createSuccessWithNoContent() {
         return new ApiResponse<>(SUCCESS_STATUS, null, null);
     }
+    public static <T> ApiResponse<T> createSuccessWithContent(T data) {
+        return new ApiResponse<>(SUCCESS_STATUS, data, null);
+    }
 
     public static ApiResponse<?> duplicateEmailException() {
         return new ApiResponse<>(ERROR_STATUS, null, "이미 가입된 메일입니다.");
