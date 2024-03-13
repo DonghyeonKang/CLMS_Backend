@@ -8,6 +8,7 @@ public enum ErrorCode {
     REFRESH_TOKEN_NOT_FOUND(400, "Refresh Token 이 존재하지 않습니다."),
     FAIL_VERIFY(400, "인증 번호가 틀렸습니다."),
     NOT_VERIFIED_PHONE(400, "인증되지 않은 번호입니다."),
+    NOT_VALID_ARGUMENT(400, "잘못된 요청 데이터입니다."),
     NOT_SEND_MESSAGE(400, "인증 번호가 전송되지 않았습니다."),
     REFRESH_NOT_EXIST(401, "인증 정보가 유효하지 않습니다."),
     ACCESS_NOT_EXIST(401, "인증 정보가 유효하지 않습니다."),

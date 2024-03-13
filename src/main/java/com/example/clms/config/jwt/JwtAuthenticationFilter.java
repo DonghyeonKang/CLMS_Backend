@@ -1,10 +1,12 @@
 package com.example.clms.config.jwt;
 
+import com.example.clms.common.exception.ArgumentNotValidException;
 import com.example.clms.common.exception.ErrorCode;
 import com.example.clms.common.exception.MemberAuthenticationException;
 import com.example.clms.dto.user.LoginRequest;
 import com.example.clms.service.auth.PrincipalDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.models.responses.ApiResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,8 +18,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -37,6 +42,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+
+		// 데이터 검증
+		validateArgs(loginRequest);
 
 		// authenticationToken 생성
 		UsernamePasswordAuthenticationToken authenticationToken =
@@ -78,5 +86,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 											  AuthenticationException failed) {
 		throw new MemberAuthenticationException(ErrorCode.MEMBER_ERROR);
+	}
+
+	private void validateArgs(LoginRequest loginRequest) {
+		if(loginRequest.getUsername() == null ||
+				loginRequest.getPassword() == null ||
+				loginRequest.getUsername().isEmpty() ||
+				loginRequest.getPassword().isEmpty() ||
+				!isValidEmail(loginRequest.getUsername())) {
+			throw new ArgumentNotValidException(ErrorCode.NOT_VALID_ARGUMENT);
+		}
+	}
+
+	private boolean isValidEmail(String email) {
+		// 이메일 형식을 검사하는 정규 표현식 패턴
+		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+		Pattern pattern = Pattern.compile(emailRegex);
+		return pattern.matcher(email).matches();
 	}
 }

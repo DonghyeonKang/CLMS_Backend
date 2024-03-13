@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -40,7 +41,7 @@ public class RegisterController {
 
     @Operation(summary = "학습자회원가입")
     @PostMapping("/student")
-    public ApiResponse<?> registerStudent(@RequestBody RegisterStudentRequest model) {
+    public ApiResponse<?> registerStudent(@RequestBody @Validated RegisterStudentRequest model) {
         model.setPassword(passwordEncoder.encode(model.getPassword()));
         registerService.register(model.toUserRegisterDto(), "USER");
 
@@ -49,7 +50,7 @@ public class RegisterController {
 
     @Operation(summary = "교수자회원가입")
     @PostMapping("/manager")
-    public ApiResponse<?> registerManager(@RequestBody RegisterManagerRequest model) {
+    public ApiResponse<?> registerManager(@RequestBody @Validated RegisterManagerRequest model) {
         model.setPassword(passwordEncoder.encode(model.getPassword()));
         registerService.register(model.toUserRegisterDto(), "MANAGER");
 
@@ -65,7 +66,7 @@ public class RegisterController {
 
     // 회원가입 인증번호 확인
     @PostMapping("/verification")
-    public ApiResponse<?> checkVerificationNumber(@RequestBody VerificationRequest model) {
+    public ApiResponse<?> checkVerificationNumber(@RequestBody @Validated VerificationRequest model) {
         emailService.verifyAuthNum(model.getEmail(), model.getAuthNumber());
         return ApiResponse.createSuccessWithNoContent();
     }
