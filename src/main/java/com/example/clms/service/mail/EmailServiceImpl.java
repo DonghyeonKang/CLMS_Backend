@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -25,7 +26,7 @@ public class EmailServiceImpl implements EmailService {
     private final MailRepository mailRepository;
     private String authNum; //랜덤 인증 코드
 
-    //실제 메일 전송
+    //실제 메일 전송 TODO: 트랜젝션 어노테이션 사용법 맞는지
     @Transactional
     public void sendEmail(String toEmail) {
         createCode();
@@ -59,7 +60,7 @@ public class EmailServiceImpl implements EmailService {
 
     //메일 작성
     private MimeMessage createEmailForm(String email) {
-        String setFrom = "clmsmailservice@naver.com"; //email-config에 설정한 자신의 이메일 주소(보내는 사람)
+        String setFrom = "clms_mail_service@naver.com"; //email-config에 설정한 자신의 이메일 주소(보내는 사람)
         String title = "CLMS 회원가입 인증 번호"; //제목
         MimeMessage message = emailSender.createMimeMessage();
 
@@ -76,6 +77,9 @@ public class EmailServiceImpl implements EmailService {
     }
 
     private void saveAuthNum(String email, String authNum) {
+        Optional<Mail> mail = mailRepository.findByEmail(email);
+        mail.ifPresent(mailRepository::delete);
+
         mailRepository.save(Mail.builder()
                 .email(email)
                 .authNum(authNum)
@@ -83,13 +87,13 @@ public class EmailServiceImpl implements EmailService {
     }
 
     public void verifyAuthNum(String email, String authNum) {
-        Mail mail = mailRepository.findByEmail(email);
+        Optional<Mail> mail = mailRepository.findByEmail(email);
 
-        if(mail == null) {
+        if(mail.isEmpty()) {
             throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND);
         } else {
-            compareAuthNum(authNum, mail.getAuthNum());
-            mailRepository.delete(mail);
+            compareAuthNum(authNum, mail.get().getAuthNum());
+            mailRepository.delete(mail.get());
         }
     }
 

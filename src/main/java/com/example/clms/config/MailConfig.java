@@ -14,8 +14,8 @@ public class MailConfig {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
         javaMailSender.setHost("smtp.naver.com");
-        javaMailSender.setUsername("clmsmailservice");
-        javaMailSender.setPassword("Ny7-4y8-3R7-GDU");
+        javaMailSender.setUsername("clms_mail_service");
+        javaMailSender.setPassword("kpuD5F^ieE8L?J$");
 
         javaMailSender.setPort(465);
 
