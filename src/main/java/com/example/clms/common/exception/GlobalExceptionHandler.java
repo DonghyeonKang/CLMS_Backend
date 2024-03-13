@@ -1,7 +1,6 @@
 package com.example.clms.common.exception;
 
 import com.example.clms.common.ApiResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,5 +20,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthNumNotEqualException.class)
     public ResponseEntity<ApiResponse<?>> handleAuthNumNotEqualException(AuthNumNotEqualException ex) {
         return ResponseEntity.status(ex.getStatus()).body(ApiResponse.authNumNotEqualException(ex.getMessage()));
+    }
+
+    @ExceptionHandler(RefreshTokenNotFoundException.class)
+    public ResponseEntity<ApiResponse<?>> handleTokenNotFoundException(RefreshTokenNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(ApiResponse.refreshTokenNotFoundException(ex.getMessage()));
+    }
+
+    @ExceptionHandler(MemberAuthenticationException.class)
+    public ResponseEntity<ApiResponse<?>> handleMemberAuthenticationException(MemberAuthenticationException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(ApiResponse.memberAuthenticationException(ex.getMessage()));
     }
 }

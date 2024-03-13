@@ -28,11 +28,19 @@ public class ApiResponse<T> {
     }
 
     public static ApiResponse<?> duplicateEmailException(String message) {
-        return new ApiResponse<>(ERROR_STATUS, null, message);
+        return new ApiResponse<>(FAIL_STATUS, null, message);
     }
 
     public static ApiResponse<?> authNumNotEqualException(String message) {
-        return new ApiResponse<>(ERROR_STATUS, null, message);
+        return new ApiResponse<>(FAIL_STATUS, null, message);
+    }
+
+    public static ApiResponse<?> refreshTokenNotFoundException(String message) {
+        return new ApiResponse<>(FAIL_STATUS, null, message);
+    }
+
+    public static ApiResponse<?> memberAuthenticationException(String message) {
+        return new ApiResponse<>(FAIL_STATUS, null, message);
     }
 
     private ApiResponse(String status, T data, String message) {
