@@ -24,7 +24,7 @@ public class RegisterServiceImpl implements RegisterService {
     final private UniversityRepository universityRepository;
 
     @Transactional
-    public User register(UserRegisterDto userDto, String role) {
+    public void register(UserRegisterDto userDto, String role) {
         // 회원가입 검증
         validateRegisterRequest(userDto);
 
@@ -35,13 +35,13 @@ public class RegisterServiceImpl implements RegisterService {
         // dto to entity
         User user;
         if(role.equals("USER")) {
-            user = userDto.toUserEntity(department, university);
+            user = userDto.toUserEntity(department, university, "ROLE_USER");
         } else {
-            user = userDto.toManagerEntity(department, university);
+            user = userDto.toManagerEntity(department, university, "ROLE_USER");
         }
 
         // jpa의 save
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     private void validateRegisterRequest(UserRegisterDto userDto) {

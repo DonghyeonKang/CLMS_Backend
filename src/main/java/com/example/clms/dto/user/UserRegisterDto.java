@@ -16,13 +16,13 @@ public class UserRegisterDto {
     private String username;
     private String name;
     private String password;
-    private String role = "ROLE_USER";
+    private String role;
     private int no;
     private String phone;
     private int universityId;
     private Long departmentId;
 
-    public User toUserEntity(Department department, University university) {
+    public User toUserEntity(Department department, University university, String role) {
         return User.builder()
                 .username(username)
                 .password(password)
@@ -34,7 +34,7 @@ public class UserRegisterDto {
                 .build();
     }
 
-    public User toManagerEntity(Department department, University university) {
+    public User toManagerEntity(Department department, University university, String role) {
         return User.builder()
                 .username(username)
                 .password(password)
