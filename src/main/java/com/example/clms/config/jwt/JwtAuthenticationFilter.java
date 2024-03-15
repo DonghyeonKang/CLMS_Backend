@@ -6,7 +6,6 @@ import com.example.clms.common.exception.MemberAuthenticationException;
 import com.example.clms.dto.user.LoginRequest;
 import com.example.clms.service.auth.PrincipalDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.models.responses.ApiResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,8 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
