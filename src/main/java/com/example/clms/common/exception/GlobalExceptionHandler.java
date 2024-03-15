@@ -33,6 +33,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatus()).body(ApiResponse.memberAuthenticationException(ex.getMessage()));
     }
 
+    @ExceptionHandler(EmptyDataAccessException.class)
+    public ResponseEntity<ApiResponse<?>> handleEmptyDataAccessException(EmptyDataAccessException ex) {
+        return ResponseEntity.status(ex.getStatus()).body(ApiResponse.emptyDataAccessException(ex.getMessage()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<?>> handleMethodArgumentNotValidException() {
         return ResponseEntity.status(400).body(ApiResponse.methodArgumentNotValidException("잘못된 요청 데이터입니다."));

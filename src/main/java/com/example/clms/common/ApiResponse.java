@@ -47,6 +47,10 @@ public class ApiResponse<T> {
         return new ApiResponse<>(ERROR_STATUS, null, message);
     }
 
+    public static ApiResponse<?> emptyDataAccessException(String message) {
+        return new ApiResponse<>(ERROR_STATUS, null, message);
+    }
+
     public static ApiResponse<?> argumentNotValidException(String message) {
         return new ApiResponse<>(ERROR_STATUS, null, message);
     }
