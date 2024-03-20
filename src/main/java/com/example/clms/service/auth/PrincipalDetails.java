@@ -23,7 +23,7 @@ public class PrincipalDetails implements UserDetails {
     public Long getId() {
         return user.getId();
     }
-    public String getRole() { return user.getRoles(); }
+    public String getRole() { return user.getRoles().getRole(); }
     public Long getDepartmentId() {
         Department department = user.getDepartment();
         return department.getId();
@@ -61,11 +61,8 @@ public class PrincipalDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println("----------------------------------------------------");
-        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        user.getRoleList().forEach(r -> {
-            authorities.add(()->{ return r;});
-        });
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(user.getRoleList());
         return authorities;
     }
 }

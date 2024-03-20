@@ -6,6 +6,7 @@ import com.example.clms.common.exception.ErrorCode;
 import com.example.clms.dto.user.UserRegisterDto;
 import com.example.clms.entity.department.Department;
 import com.example.clms.entity.university.University;
+import com.example.clms.entity.user.Roles;
 import com.example.clms.entity.user.User;
 import com.example.clms.repository.department.DepartmentRepository;
 import com.example.clms.repository.university.UniversityRepository;
@@ -35,9 +36,9 @@ public class RegisterServiceImpl implements RegisterService {
         // dto to entity
         User user;
         if(role.equals("USER")) {
-            user = userDto.toUserEntity(department, university, "ROLE_USER");
+            user = userDto.toUserEntity(department, university, Roles.USER);
         } else {
-            user = userDto.toManagerEntity(department, university, "ROLE_USER");
+            user = userDto.toManagerEntity(department, university, Roles.USER);
         }
 
         // jpa의 save

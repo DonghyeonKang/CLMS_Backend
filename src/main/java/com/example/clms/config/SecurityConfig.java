@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable) // TODO: CORS Filter 추가
                 .authorizeHttpRequests(authorizeRequest -> authorizeRequest
+                        .requestMatchers("/user/manager/verification").hasRole("ADMIN")
                         .requestMatchers( "/swagger-ui/**", "/v3/api-docs/**", "/register/**").permitAll()
                         .anyRequest().authenticated()
                 )

@@ -7,7 +7,8 @@ public enum ErrorCode {
     REFRESH_TOKEN_NOT_FOUND(400, "Refresh Token 이 존재하지 않습니다."),
     FAIL_VERIFY(400, "인증 번호가 틀렸습니다."),
     NOT_VALID_ARGUMENT(400, "잘못된 요청 데이터입니다."),
-    EMPTY_DATA_ACCESS(400, "존재하지 않는 데이터입니다.");
+    EMPTY_DATA_ACCESS(400, "존재하지 않는 데이터입니다."),
+    NOT_MANAGER(403, "교수자 사용자가 아닙니다.");
 
     private final int status;
     private final String message;

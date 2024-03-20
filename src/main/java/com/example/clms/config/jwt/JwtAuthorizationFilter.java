@@ -75,7 +75,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 		User user = userRepository.findByUsername(username)
 				.stream()
 				.findFirst()
-				.orElse(null); // Optional<Object> 를 Object 로 변경
+				.orElse(null);
 
 		// authentication 생성
 		PrincipalDetails principalDetails = new PrincipalDetails(user);
