@@ -42,4 +42,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse<?>> handleMethodArgumentNotValidException() {
         return ResponseEntity.status(400).body(ApiResponse.methodArgumentNotValidException("잘못된 요청 데이터입니다."));
     }
+
+    @ExceptionHandler(DuplicatedRequestException.class)
+    public ResponseEntity<ApiResponse<?>> handleDuplicatedRequestException(DuplicatedRequestException ex) {
+        return ResponseEntity.status(400).body(ApiResponse.duplicatedRequestException(ex.getMessage()));
+    }
 }

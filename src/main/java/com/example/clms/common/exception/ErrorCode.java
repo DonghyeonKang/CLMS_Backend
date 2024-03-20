@@ -8,7 +8,8 @@ public enum ErrorCode {
     FAIL_VERIFY(400, "인증 번호가 틀렸습니다."),
     NOT_VALID_ARGUMENT(400, "잘못된 요청 데이터입니다."),
     EMPTY_DATA_ACCESS(400, "존재하지 않는 데이터입니다."),
-    NOT_MANAGER(403, "교수자 사용자가 아닙니다.");
+    NOT_MANAGER(403, "교수자 사용자가 아닙니다."),
+    DUPLICATED_REQUEST(400, "이미 진행 중인 요청입니다.");
 
     private final int status;
     private final String message;

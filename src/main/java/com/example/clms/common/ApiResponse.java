@@ -55,6 +55,10 @@ public class ApiResponse<T> {
         return new ApiResponse<>(ERROR_STATUS, null, message);
     }
 
+    public static ApiResponse<?> duplicatedRequestException(String message) {
+        return new ApiResponse<>(FAIL_STATUS, null, message);
+    }
+
     private ApiResponse(String status, T data, String message) {
         this.status = status;
         this.data = data;
