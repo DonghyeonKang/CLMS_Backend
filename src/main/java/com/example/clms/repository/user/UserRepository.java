@@ -11,4 +11,5 @@ public interface UserRepository {
     Optional<User> findByUsername(String username);
     Optional<List<String>> findUsernameByDepartmentId(int departmentId);
     void deleteByUsername(String username);
+    User getReferenceById(Long id);
 }

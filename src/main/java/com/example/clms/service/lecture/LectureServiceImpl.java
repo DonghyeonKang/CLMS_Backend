@@ -1,17 +1,14 @@
 package com.example.clms.service.lecture;
 
-import com.example.clms.common.exception.DuplicatedRequestException;
 import com.example.clms.common.exception.EmptyDataAccessException;
 import com.example.clms.common.exception.ErrorCode;
 import com.example.clms.common.exception.UserNotFoundException;
-import com.example.clms.dto.lecture.ClassRegistrationDto;
-import com.example.clms.dto.lecture.CreateLectureRequest;
-import com.example.clms.dto.lecture.LectureDto;
-import com.example.clms.dto.lecture.StudentDto;
+import com.example.clms.dto.lecture.*;
 import com.example.clms.entity.department.Department;
 import com.example.clms.entity.lecture.Lecture;
 import com.example.clms.entity.lecture.LectureUser;
 import com.example.clms.entity.server.Server;
+import com.example.clms.entity.user.User;
 import com.example.clms.repository.department.DepartmentRepository;
 import com.example.clms.repository.lecture.LectureRepository;
 import com.example.clms.repository.lecture.LectureUserRepository;
@@ -101,16 +98,15 @@ public class LectureServiceImpl implements LectureService {
     public List<StudentDto> getStudentList(Long lectureId) {
 
         List<LectureUser> lectureUsers = lectureUserRepository.findAllByPermittedUserId(lectureId);
-
         List<StudentDto> result = new ArrayList<>();
-//
-//        for (LectureUser lectureUser : lectureUsers) {
-//            StudentDto newDto = new StudentDto();
-//            newDto.setId((lectureUser.getId()));
-//            newDto.setStudentId(lectureUser.getUser().getNo());
-//            newDto.setName(lectureUser.getUser().getName());
-//            result.add(newDto);
-//        }
+
+        for (LectureUser lectureUser : lectureUsers) {
+            StudentDto newDto = new StudentDto();
+            newDto.setId((lectureUser.getId()));
+            newDto.setStudentId(lectureUser.getUser().getNo());
+            newDto.setName(lectureUser.getUser().getName());
+            result.add(newDto);
+        }
 
         return result;
     }
@@ -121,64 +117,55 @@ public class LectureServiceImpl implements LectureService {
         List<LectureUser> lectureUsers = lectureUserRepository.findAllByWaitingUserId(lectureId);
 
         List<StudentDto> result = new ArrayList<>();
-//
-//        for (LectureUser lectureUser : lectureUsers) {
-//            StudentDto newDto = new StudentDto();
-//            newDto.setStudentId(lectureUser.getUser().getNo());
-//            newDto.setName(lectureUser.getUser().getName());
-//            newDto.setId((lectureUser.getId()));
-//            result.add(newDto);
-//        }
+
+        for (LectureUser lectureUser : lectureUsers) {
+            StudentDto newDto = new StudentDto();
+            newDto.setStudentId(lectureUser.getUser().getNo());
+            newDto.setName(lectureUser.getUser().getName());
+            newDto.setId((lectureUser.getId()));
+            result.add(newDto);
+        }
 
         return result;
     }
 
     // 수강 신청
     @Transactional
-    public void signUpClass(ClassRegistrationDto classRegistrationDto) {
-//        User user = userRepository.getReferenceById(classRegistrationDto.getUserId());
-//        Lecture lecture = lectureRepository.getReferenceById(classRegistrationDto.getLectureId());
-//        System.out.println("---------------------");
-//        System.out.println(classRegistrationDto.getLectureId());
-//        // 엔티티 생성
-//        LectureUser newLectureUser = LectureUser.builder()
-//                .user(user)
-//                .lecture(lecture)
-//                .build();
-//
-//        // 엔티티 저장
-//        LectureUser lectureUser = lectureUserRepository.save(newLectureUser);
+    public void signUpClass(SignUpClassDto signUpClassDto) {
+        User user = userRepository.findById(signUpClassDto.getUserId())
+                .orElseThrow(() -> new EmptyDataAccessException(ErrorCode.USER_NOT_FOUND));
+        Lecture lecture = lectureRepository.findById(signUpClassDto.getLectureId())
+                .orElseThrow(() -> new EmptyDataAccessException(ErrorCode.EMPTY_DATA_ACCESS));
+
+        LectureUser newLectureUser = LectureUser.builder()
+                .user(user)
+                .lecture(lecture)
+                .build();
+
+        lectureUserRepository.save(newLectureUser);
     }
 
     // 수강 신청 승인
     @Transactional
-    public List<StudentDto> approveRegistration(ClassRegistrationDto classRegistrationDto) {
-        // 엔티티 탐색
-        LectureUser lectureUser = lectureUserRepository.findById(classRegistrationDto.getId())
-                .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
+    public List<StudentDto> approveRegistration(ApproveRegistrationRequest approveRegistrationRequest) {
+        LectureUser lectureUser = lectureUserRepository.findById(approveRegistrationRequest.getId())
+                .orElseThrow(() -> new EmptyDataAccessException(ErrorCode.EMPTY_DATA_ACCESS));
 
-        // 수정
         lectureUser.setPermit();
         lectureUserRepository.save(lectureUser);
-
-        List<StudentDto> result = getStudentListForRegister(lectureUser.getLecture().getId());
-        return result;
+        return getStudentListForRegister(lectureUser.getLecture().getId());
     }
 
 
     // 수강 신청 거절
    @Transactional
-    public List<StudentDto> refuseRegistration(ClassRegistrationDto classRegistrationDto) {
-        // 엔티티 탐색
-        LectureUser lectureUser = lectureUserRepository.findById(classRegistrationDto.getId())
-                .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND));
+    public List<StudentDto> refuseRegistration(RefuseRegistrationRequest refuseRegistrationRequest) {
+        LectureUser lectureUser = lectureUserRepository.findById(refuseRegistrationRequest.getId())
+                .orElseThrow(() -> new EmptyDataAccessException(ErrorCode.EMPTY_DATA_ACCESS));
 
-        // 수정
         lectureUser.setRefuse();
         lectureUserRepository.save(lectureUser);
-
-       List<StudentDto> result = getStudentListForRegister(lectureUser.getLecture().getId());
-       return result;
+        return getStudentListForRegister(lectureUser.getLecture().getId());
    }
 
     public LectureDto findById(Long lectureId) {

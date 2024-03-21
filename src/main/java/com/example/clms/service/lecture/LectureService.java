@@ -1,9 +1,6 @@
 package com.example.clms.service.lecture;
 
-import com.example.clms.dto.lecture.ClassRegistrationDto;
-import com.example.clms.dto.lecture.CreateLectureRequest;
-import com.example.clms.dto.lecture.LectureDto;
-import com.example.clms.dto.lecture.StudentDto;
+import com.example.clms.dto.lecture.*;
 
 import java.util.List;
 
@@ -16,8 +13,8 @@ public interface LectureService {
     void deleteLecture(Long lectureId);
     List<StudentDto> getStudentList(Long lectureId);
     List<StudentDto> getStudentListForRegister(Long lectureId);
-    void signUpClass(ClassRegistrationDto classRegistrationDto);
-    List<StudentDto> approveRegistration(ClassRegistrationDto classRegistrationDto);
-    List<StudentDto> refuseRegistration(ClassRegistrationDto classRegistrationDto);
+    void signUpClass(SignUpClassDto signUpClassDto);
+    List<StudentDto> approveRegistration(ApproveRegistrationRequest approveRegistrationRequest);
+    List<StudentDto> refuseRegistration(RefuseRegistrationRequest refuseRegistrationRequest);
     LectureDto findById(Long lectureId);
 }
