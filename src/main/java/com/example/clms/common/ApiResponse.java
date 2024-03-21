@@ -51,10 +51,6 @@ public class ApiResponse<T> {
         return new ApiResponse<>(ERROR_STATUS, null, message);
     }
 
-    public static ApiResponse<?> argumentNotValidException(String message) {
-        return new ApiResponse<>(ERROR_STATUS, null, message);
-    }
-
     public static ApiResponse<?> duplicatedRequestException(String message) {
         return new ApiResponse<>(FAIL_STATUS, null, message);
     }
