@@ -27,7 +27,7 @@ public class ShParser {
         return true;
     }
 
-    public ParserResponseDto checkContainerResource(String resultStr) throws IOException {
+    public ParserResponseDto checkContainerResource(String resultStr) {
         ParserResponseDto responseDto = new ParserResponseDto(); // 쉘 실행 결과 및 JSON 리스트 반환 클래스
 
         if (resultStr == null) {
@@ -86,14 +86,14 @@ public class ShParser {
             System.out.println(e.getMessage());
         }
 
-        // 리스트의 가장 마지막 객체(CSWS 성공 알림)는 제외
+        // 리스트의 가장 마지막 객체(CLMS 성공 알림)는 제외
         int last = responseDto.resultList.size() - 1;
         responseDto.resultList.remove(last);
 
         return responseDto; // 출력 결과 및 json 리스트가 담긴 dto 객체 반환
     }
 
-    public ParserResponseDto checkServerResource(String resultStr) throws IOException {
+    public ParserResponseDto checkServerResource(String resultStr) {
         ParserResponseDto responseDto = new ParserResponseDto(); // 쉘 실행 결과 및 JSON 리스트 반환 클래스
 
         if (!isSuccess(resultStr)) { // 쉘 실행에 실패한 경우 결과에 false 입력 후 반환
@@ -176,14 +176,14 @@ public class ShParser {
             System.out.println(e.getMessage());
         }
 
-        // 리스트의 가장 마지막 객체(CSWS 성공 알림)는 제외
+        // 리스트의 가장 마지막 객체(CLMS 성공 알림)는 제외
         int last = responseDto.resultList.size() - 1;
         responseDto.resultList.remove(last);
 
         return responseDto; // 출력 결과 및 json 리스트가 담긴 dto 객체 반환
     }
 
-    public ParserResponseDto printStatusforManager(String resultStr) throws IOException {
+    public ParserResponseDto printStatusForManager(String resultStr) {
         ParserResponseDto responseDto = new ParserResponseDto(); // 쉘 실행 결과 및 JSON 리스트 반환 클래스
 
         if (!isSuccess(resultStr)) { // 쉘 실행에 실패한 경우 결과에 false 입력 후 반환
@@ -223,14 +223,14 @@ public class ShParser {
             responseDto.success = false;
         }
 
-        // 리스트의 가장 마지막 객체(CSWS 성공 알림)는 제외
+        // 리스트의 가장 마지막 객체(CLMS 성공 알림)는 제외
         int last = responseDto.resultList.size() - 1;
         responseDto.resultList.remove(last);
 
         return responseDto;
     }
 
-    public ParserResponseDto printStatusforUser(String resultStr) throws IOException {
+    public ParserResponseDto printStatusForUser(String resultStr) {
         ParserResponseDto responseDto = new ParserResponseDto();
 
         if (!isSuccess(resultStr)) {
@@ -272,40 +272,10 @@ public class ShParser {
             // Optionally, log the error or handle it accordingly.
         }
 
-        // 리스트의 가장 마지막 객체(CSWS 성공 알림)는 제외
+        // 리스트의 가장 마지막 객체(CLMS 성공 알림)는 제외
         int last = responseDto.resultList.size() - 1;
         responseDto.resultList.remove(last);
 
         return responseDto;
     }
-
-
-    // 테스트를 위한 임시 메서드. 파일을 읽어서 문자열로 반환.
-    public String readResultFile(String filename) {
-        BufferedReader br;
-
-        String baseResultFilePath = "/C:/Users/GHL/info/pika"; // 임의의 기본 경로
-        String resultFilePath = baseResultFilePath + filename;
-
-        try {
-            FileReader fileReader = new FileReader(resultFilePath);
-            br = new BufferedReader(fileReader);
-
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-            }
-
-            br.close();
-            System.out.println(sb.toString());
-            return sb.toString();
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            return null;
-        }
-
-    }
-
 }
