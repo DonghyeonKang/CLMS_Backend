@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface DepartmentRepository {
 
-    public List<Department> findAllByUniversity_Id(int universityId);
-    public Department getReferenceById(Long departmentId);
+    List<Department> findAllByUniversity_Id(int universityId);
+    Department getReferenceById(Long departmentId);
 }
