@@ -1,9 +1,11 @@
 package com.example.clms;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 
-@SpringBootTest
+@DataJpaTest
+@TestPropertySource(locations = "classpath:application-test.yml")
 class ClmsApplicationTests {
 
 	@Test

@@ -5,9 +5,6 @@ import com.example.clms.dto.university.UniversityDto;
 import com.example.clms.dto.user.RegisterManagerRequest;
 import com.example.clms.dto.user.RegisterStudentRequest;
 import com.example.clms.dto.user.VerificationRequest;
-import com.example.clms.entity.department.Department;
-import com.example.clms.entity.mail.Mail;
-import com.example.clms.entity.university.University;
 import com.example.clms.repository.department.DepartmentRepository;
 import com.example.clms.repository.mail.MailRepository;
 import com.example.clms.repository.university.UniversityRepository;
@@ -17,25 +14,18 @@ import com.example.clms.service.mail.EmailService;
 import com.example.clms.service.university.UniversityService;
 import com.example.clms.service.user.RegisterService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -339,7 +329,6 @@ class RegisterControllerTest {
                         .name(name)
                         .build()
         );
-        when().thenReturn(universityDtoList);;
 
         mvc.perform(post(BASE_URL + "/register/student")
                         .content(body1)
