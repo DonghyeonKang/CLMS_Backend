@@ -4,6 +4,7 @@ spring:
     url: jdbc:h2:mem:test
     username: sa
     password:
+    initialization-mode: always
 
   jpa:
     hibernate:

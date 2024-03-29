@@ -79,7 +79,8 @@ dependencies {
 	testImplementation(platform('org.junit:junit-bom:5.10.2'))
 	testImplementation('org.junit.jupiter:junit-jupiter')
 	testRuntimeOnly('org.junit.platform:junit-platform-launcher')
-	runtimeOnly 'com.h2database:h2' // 테스트 코드 작성시 사용할 DB(H2)
+	testImplementation 'com.h2database:h2'
+	testImplementation("org.assertj:assertj-core:3.22.0")
 }
 
 test {

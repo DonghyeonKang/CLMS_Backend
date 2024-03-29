@@ -20,9 +20,9 @@ import org.springframework.stereotype.Component;
 @Component  // 컴포넌트 스캔 방식으로 빈 등록
 @RequiredArgsConstructor // private field 생성자 주입으로 DI 구현
 public class RegisterServiceImpl implements RegisterService {
-    final private UserRepository userRepository;
-    final private DepartmentRepository departmentRepository;
-    final private UniversityRepository universityRepository;
+    private final UserRepository userRepository;
+    private final DepartmentRepository departmentRepository;
+    private final UniversityRepository universityRepository;
 
     @Transactional
     public void register(UserRegisterDto userDto, String role) {
