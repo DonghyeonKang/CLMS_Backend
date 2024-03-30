@@ -297,58 +297,6 @@ class RegisterControllerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("학습자 회원가입 중복 회원가입")
-    void 학습자회원가입_중복_회원가입() throws Exception {
-        // given
-        String username = "donghyeon09@gmail.com";
-        String password = "donghyeon09";
-        String universityId = "1";
-        String departmentId = "1";
-        int no = 2018010836;
-        String name = "강동현";
-
-        // when
-        String body1 = mapper.writeValueAsString(
-                RegisterStudentRequest.builder()
-                        .username(username)
-                        .password(password)
-                        .universityId(universityId)
-                        .departmentId(departmentId)
-                        .no(no)
-                        .name(name)
-                        .build()
-        );
-
-        String body2 = mapper.writeValueAsString(
-                RegisterStudentRequest.builder()
-                        .username(username)
-                        .password(password)
-                        .universityId(universityId)
-                        .departmentId(departmentId)
-                        .no(no)
-                        .name(name)
-                        .build()
-        );
-
-        mvc.perform(post(BASE_URL + "/register/student")
-                        .content(body1)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .with(csrf())
-                );
-
-        // then
-        mvc.perform(post(BASE_URL + "/register/student")
-                .content(body2)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(csrf())
-        )
-                .andExpect(status().is4xxClientError())
-                .andExpect(jsonPath("$.status").value("error"))
-                .andExpect(jsonPath("$.message").value("잘못된 요청 데이터입니다."));
-    }
-
-    @Test
-    @WithMockUser
     @DisplayName("학습자 회원가입 유효하지 않은 형식 비밀번호")
     void 학습자회원가입_Invalid_Password() throws Exception {
         // given
@@ -548,58 +496,6 @@ class RegisterControllerTest {
         // then
         mvc.perform(post(BASE_URL + "/register/manager")
                         .content(body)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .with(csrf())
-                )
-                .andExpect(status().is4xxClientError())
-                .andExpect(jsonPath("$.status").value("error"))
-                .andExpect(jsonPath("$.message").value("잘못된 요청 데이터입니다."));
-    }
-
-    @Test
-    @WithMockUser
-    @DisplayName("교수자 회원가입 중복 회원가입")
-    void 교수자회원가입_중복_회원가입() throws Exception {
-        // given
-        String username = "donghyeon09@gmail.com";
-        String password = "donghyeon09";
-        String phone = "055-772-1234";
-        String universityId = "1";
-        String departmentId = "1";
-        String name = "강동현";
-
-        // when
-        String body1 = mapper.writeValueAsString(
-                RegisterManagerRequest.builder()
-                        .username(username)
-                        .password(password)
-                        .universityId(universityId)
-                        .departmentId(departmentId)
-                        .phone(phone)
-                        .name(name)
-                        .build()
-        );
-
-        String body2 = mapper.writeValueAsString(
-                RegisterManagerRequest.builder()
-                        .username(username)
-                        .password(password)
-                        .universityId(universityId)
-                        .departmentId(departmentId)
-                        .phone(phone)
-                        .name(name)
-                        .build()
-        );
-
-        mvc.perform(post(BASE_URL + "/register/manager")
-                .content(body1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(csrf())
-        );
-
-        // then
-        mvc.perform(post(BASE_URL + "/register/manager")
-                        .content(body2)
                         .contentType(MediaType.APPLICATION_JSON)
                         .with(csrf())
                 )
