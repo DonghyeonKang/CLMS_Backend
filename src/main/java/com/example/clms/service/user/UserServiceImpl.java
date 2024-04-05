@@ -6,10 +6,11 @@ import com.example.clms.entity.user.User;
 import com.example.clms.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component  // component scan 방식으로 빈 등록. Repository 해도 상관없음
-@RequiredArgsConstructor // private 필드를 생성자 주입으로 DI 구현
+@Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {  // 사용자 회원가입, 사용자 정보 불러오기
 
     private final UserRepository userRepository;

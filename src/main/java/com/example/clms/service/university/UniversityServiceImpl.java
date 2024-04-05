@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UniversityServiceImpl implements UniversityService{
     private final UniversityRepository universityRepository;
-    @Override
+
     public List<UniversityDto> findAllUniversity() {
 
         List<University> entityList = universityRepository.findAll();
@@ -26,7 +26,6 @@ public class UniversityServiceImpl implements UniversityService{
         return dtoList;
     }
 
-    @Override
     public University findById(int universityId) {
         return universityRepository.findById(universityId);
     }
