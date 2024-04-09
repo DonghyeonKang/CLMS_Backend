@@ -30,8 +30,8 @@ public class ServerController {
 
     // 서버 등록 자동화 파일 다운로드
     // wget http://clms.kro.kr/servers/register/clmsPackage.tar 로 다운로드 할 수 있도록 함
-    @GetMapping("/register/clmsPackage.tar")
-    public void getServerizeFile(HttpServletResponse response) throws IOException {
+    @GetMapping("/a")
+    public void getServerizeFile(HttpServletResponse response) {
         // ClassPathResource resource = new ClassPathResource("clmsPackage.tar");
         File file = new File("/home/ubuntu/clmsPackage.tar");
 
