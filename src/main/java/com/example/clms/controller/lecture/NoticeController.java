@@ -5,7 +5,6 @@ import com.example.clms.dto.lecture.NoticeDto;
 import com.example.clms.dto.lecture.PostingNoticeRequest;
 import com.example.clms.service.lecture.NoticeService;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
