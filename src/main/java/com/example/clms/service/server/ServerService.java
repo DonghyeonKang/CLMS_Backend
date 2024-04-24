@@ -4,6 +4,7 @@ import com.example.clms.dto.server.ServerDto;
 import com.example.clms.dto.server.ServerListResponse;
 import com.example.clms.dto.server.ServerResourceResponse;
 
+import java.io.File;
 import java.util.List;
 
 public interface ServerService {
@@ -12,4 +13,5 @@ public interface ServerService {
     ServerResourceResponse getServerResource(Long serverId);
     void deleteServer(Long serverId);
     ServerDto findById(Long serverId);
+    File getFile();
 }

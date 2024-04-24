@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable) // TODO: CORS Filter 추가
                 .authorizeHttpRequests(authorizeRequest -> authorizeRequest
                         .requestMatchers("/user/manager/verification").hasRole("ADMIN")
-                        .requestMatchers( "/swagger-ui/**", "/v3/api-docs/**", "/register/**").permitAll()
+                        .requestMatchers( "/swagger-ui/**", "/v3/api-docs/**", "/register/**", "/servers/register/clmsPackage.tar").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtService))

@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -125,5 +126,9 @@ public class ServerServiceImpl implements ServerService {
         dto.setDepartmentId(server.getDepartment().getId());
 
         return dto;
+    }
+
+    public File getFile() {
+        return new File("/Users/donghyeonkang/project/CLMS_Backend/src/main/resources/clmsPackage.tar");
     }
 }

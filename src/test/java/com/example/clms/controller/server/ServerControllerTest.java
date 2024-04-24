@@ -8,7 +8,6 @@ import com.example.clms.service.server.ServerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -37,10 +36,8 @@ class ServerControllerTest {
 
     @Autowired
     ObjectMapper mapper;
-
     @Autowired
     MockMvc mvc;
-
     @MockBean
     private ServerService serverService;
 
@@ -148,7 +145,7 @@ class ServerControllerTest {
 
     @Test
     @WithMockUser
-    void deleteServer() throws Exception {
+    void 서버삭제() throws Exception {
         // given
 
         // when // then
@@ -160,4 +157,31 @@ class ServerControllerTest {
 
         verify(serverService).deleteServer(1L);
     }
+
+    @Test
+    @WithMockUser
+    void clms패키지다운로드_fileNotExist() throws Exception {
+        // given
+        File file = new File("");
+        when(serverService.getFile())
+                .thenReturn(file);
+
+        // when // then
+        mvc.perform(get(BASE_URL + "/servers/register/clmsPackage.tar"))
+                .andExpect(status().is5xxServerError());
+    }
+
+    @Test
+    @WithMockUser
+    void clms패키지다운로드() throws Exception {
+        // given
+        File file = new File("/Users/donghyeonkang/project/CLMS_Backend/src/main/resources/clmsPackage.tar");
+        when(serverService.getFile())
+                .thenReturn(file);
+
+        // when // then
+        mvc.perform(get(BASE_URL + "/servers/register/clmsPackage.tar"))
+                .andExpect(status().isOk());
+    }
+
 }

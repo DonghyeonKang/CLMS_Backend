@@ -10,6 +10,7 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
@@ -30,34 +31,29 @@ public class ServerController {
 
     // 서버 등록 자동화 파일 다운로드
     // wget http://clms.kro.kr/servers/register/clmsPackage.tar 로 다운로드 할 수 있도록 함
-    @GetMapping("/a")
+    @GetMapping("/register/clmsPackage.tar")
     public void getServerizeFile(HttpServletResponse response) {
-        // ClassPathResource resource = new ClassPathResource("clmsPackage.tar");
-        File file = new File("/home/ubuntu/clmsPackage.tar");
+        File file = serverService.getFile();
 
-        if (file.exists()) {
-            response.setContentType("application/x-tar");
-            response.setHeader("Content-Disposition", "attachment; filename=\"clmsPackage.tar\"");
-            try {
-                 FileInputStream fis = new FileInputStream(file);
-                BufferedInputStream bis = new BufferedInputStream(fis);
-                ServletOutputStream so = response.getOutputStream();
-                BufferedOutputStream bos = new BufferedOutputStream(so);
+        response.setContentType("application/x-tar");
+        response.setHeader("Content-Disposition", "attachment; filename=\"clmsPackage.tar\"");
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            ServletOutputStream so = response.getOutputStream();
+            BufferedOutputStream bos = new BufferedOutputStream(so);
 
-                int data;
-                while ((data = bis.read()) != -1) {
-                    bos.write(data);
-                }
-
-                bos.close();
-                fis.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            int data;
+            while ((data = bis.read()) != -1) {
+                bos.write(data);
             }
-        } else {
-            // 파일이 존재하지 않을 때 처리
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+            bos.close();
+            fis.close();
+        } catch (IOException e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+
     }
 
     // 서버 리스트 조회
